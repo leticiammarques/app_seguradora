@@ -13,13 +13,15 @@ class AuthService {
       final user = result.user;
 
       if (user != null) {
-        Map<String, dynamic> doc = {
-          'id': user.uid,
-          'name': user.displayName,
-          'email': user.email,
-          'phone': user.phoneNumber,
-        };
-        return UserModel.fromMap(doc);
+        await user.reload();
+
+        final userModel = UserModel(
+          id: user.uid,
+          name: user.displayName,
+          email: user.email,
+          phone: user.phoneNumber,
+        );
+        return userModel;
       }
 
       return null;
@@ -35,14 +37,12 @@ class AuthService {
     String phone,
   ) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      print('Usuário criado no Firebase Auth: ${userCredential.user?.uid}');
 
       await userCredential.user?.updateDisplayName(name);
-      print('Nome de exibição atualizado.');
 
       final userModel = UserModel(
         id: userCredential.user?.uid,
@@ -51,13 +51,10 @@ class AuthService {
         phone: phone,
       );
 
-
       return userModel;
-    } on FirebaseAuthException catch (e) {
-      print('AuthService - Erro de autenticação: ${e.code} - ${e.message}');
+    } on FirebaseAuthException catch (_) {
       return null;
     } catch (e) {
-      print('AuthService - Erro geral: $e');
       return null;
     }
   }

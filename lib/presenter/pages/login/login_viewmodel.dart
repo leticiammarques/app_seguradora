@@ -1,8 +1,6 @@
-import 'package:insurance_seguradora/app/app_routes.dart';
 import 'package:insurance_seguradora/core/services/auth_service.dart';
-import 'package:insurance_seguradora/domain/viewmodels/session_viewmodel.dart';
+import 'package:insurance_seguradora/data/models/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class LoginViewModel extends ChangeNotifier {
   final AuthService _authService;
@@ -11,6 +9,7 @@ class LoginViewModel extends ChangeNotifier {
 
   String? errorMessage;
   bool isLoading = false;
+  UserModel? user;
 
   Future<void> login({
     required String email,
@@ -22,12 +21,9 @@ class LoginViewModel extends ChangeNotifier {
       errorMessage = null;
       notifyListeners();
 
-      final user = await _authService.login(email, password);
+      user = await _authService.login(email, password);
 
-      if (user != null) {
-        Provider.of<SessionViewModel>(context, listen: false).setUser(user);
-        Navigator.pushReplacementNamed(context, AppRoutes.home);
-      } else {
+      if (user == null) {
         errorMessage = 'Login inválido. Verifique suas credenciais.';
       }
     } catch (e) {
@@ -36,9 +32,5 @@ class LoginViewModel extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
     }
-  }
-
-  void goToRegisterPage({required BuildContext context}) {
-    Navigator.pushReplacementNamed(context, AppRoutes.register);
   }
 }
