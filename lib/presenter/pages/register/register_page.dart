@@ -39,14 +39,17 @@ class RegisterPage extends StatelessWidget {
                     controller: nameController,
                     decoration: const InputDecoration(labelText: 'Nome'),
                   ),
+                  SizedBox(height: 16),
                   TextField(
                     controller: emailController,
                     decoration: const InputDecoration(labelText: 'Email'),
                   ),
+                  SizedBox(height: 16),
                   TextField(
                     controller: phoneController,
                     decoration: const InputDecoration(labelText: 'Telefone'),
                   ),
+                  SizedBox(height: 16),
                   TextField(
                     controller: passwordController,
                     decoration: InputDecoration(

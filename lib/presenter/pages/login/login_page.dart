@@ -1,6 +1,7 @@
 import 'package:insurance_seguradora/app/app_routes.dart';
 import 'package:insurance_seguradora/core/constants/assets_constants.dart';
 import 'package:insurance_seguradora/core/services/auth_service.dart';
+import 'package:insurance_seguradora/core/utils/utils.dart';
 import 'package:insurance_seguradora/domain/viewmodels/session_viewmodel.dart';
 import 'package:insurance_seguradora/presenter/pages/login/login_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,7 @@ class LoginPage extends StatelessWidget {
                       controller: emailController,
                       decoration: InputDecoration(labelText: 'Email'),
                     ),
+                    SizedBox(height: 16),
                     TextField(
                       controller: passwordController,
                       decoration: InputDecoration(
@@ -64,7 +66,18 @@ class LoginPage extends StatelessWidget {
                               AppRoutes.register,
                             );
                           },
-                          child: Text('Esqueci a senha'),
+                          style: TextButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            minimumSize: Size(0, 0),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          child: Text(
+                            'Esqueci a senha',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -122,22 +135,43 @@ class LoginPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(
-                          AssetsConstants.pathFacebook,
-                          width: 40,
-                          height: 40,
+                        GestureDetector(
+                          onTap: () {
+                            UrlHelper.launchLink(
+                              "https://web.facebook.com/TokioMarineSeguradora?_rdc=1&_rdr#",
+                            );
+                          },
+                          child: SvgPicture.asset(
+                            AssetsConstants.pathFacebook,
+                            width: 40,
+                            height: 40,
+                          ),
                         ),
                         const SizedBox(height: 16),
-                        SvgPicture.asset(
-                          AssetsConstants.pathInstagram,
-                          width: 40,
-                          height: 40,
+                        GestureDetector(
+                          onTap: () {
+                            UrlHelper.launchLink(
+                              "https://www.instagram.com/tokiomarineseguradora/",
+                            );
+                          },
+                          child: SvgPicture.asset(
+                            AssetsConstants.pathInstagram,
+                            width: 40,
+                            height: 40,
+                          ),
                         ),
                         const SizedBox(height: 16),
-                        SvgPicture.asset(
-                          AssetsConstants.pathLinkedin,
-                          width: 40,
-                          height: 40,
+                        GestureDetector(
+                          onTap: () {
+                            UrlHelper.launchLink(
+                              "https://www.linkedin.com/company/tokio-marine-seguradora-s-a/?originalSubdomain=br",
+                            );
+                          },
+                          child: SvgPicture.asset(
+                            AssetsConstants.pathLinkedin,
+                            width: 40,
+                            height: 40,
+                          ),
                         ),
                       ],
                     ),
