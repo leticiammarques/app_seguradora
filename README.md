@@ -2,6 +2,8 @@
 
 Um novo projeto Flutter.
 
+Teste também a aplicação web: (https://seguradora-1868c.web.app/)
+
 ## Primeiros passos
 
 Este projeto utiliza **Firebase** como backend.  
