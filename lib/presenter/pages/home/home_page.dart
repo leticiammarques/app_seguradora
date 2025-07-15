@@ -1,7 +1,9 @@
+import 'package:insurance_seguradora/app/app_routes.dart';
 import 'package:insurance_seguradora/core/services/auth_service.dart';
 import 'package:insurance_seguradora/core/widgets/custom_drawer.dart';
 import 'package:insurance_seguradora/core/widgets/quote_card.dart';
 import 'package:insurance_seguradora/domain/viewmodels/session_viewmodel.dart';
+import 'package:insurance_seguradora/presenter/components/webview_page.dart';
 import 'package:insurance_seguradora/presenter/pages/home/home_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,21 +22,28 @@ class HomePage extends StatelessWidget {
       child: Consumer<HomeViewModel>(
         builder: (context, viewModel, child) {
           final user = viewModel.session.currentUser;
-
+          final firstName = user?.name?.trim().split(' ').first ?? "Usuário";
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Home'),
+              backgroundColor: Colors.blue,
               actions: [
                 IconButton(
-                  onPressed: () {
-                    viewModel.logout(context);
+                  onPressed: () async {
+                    await viewModel.logout(context);
+                    if (!viewModel.isLoading) {
+                      Provider.of<SessionViewModel>(
+                        context,
+                        listen: false,
+                      ).clearUser();
+                      Navigator.pushReplacementNamed(context, AppRoutes.login);
+                    }
                   },
                   icon: const Icon(Icons.logout),
                 ),
               ],
             ),
             drawer: CustomDrawer(
-              userName: user != null ? 'Olá, ${user.name}' : "Olá, ",
+              userName: 'Olá, $firstName!',
             ),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -44,7 +53,7 @@ class HomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Olá, ${user!.name}!',
+                      user != null ? 'Olá, $firstName!' : "Olá, Usuário!",
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -72,7 +81,16 @@ class HomePage extends StatelessWidget {
                         QuoteCard(
                           title: 'Automóvel',
                           icon: Icons.directions_car,
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => WebViewPage(
+                                  url: 'https://www.tokiomarine.com.br/',
+                                  title: 'Cotação de Automóvel',
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         QuoteCard(
                           title: 'Residência',
@@ -104,9 +122,7 @@ class HomePage extends StatelessWidget {
                           ),
                         ),
                         TextButton.icon(
-                          onPressed: () {
-
-                          },
+                          onPressed: () {},
                           icon: const Icon(Icons.add),
                           label: const Text('Adicionar'),
                         ),

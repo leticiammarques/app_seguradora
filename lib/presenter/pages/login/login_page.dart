@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
         builder: (context, viewModel, child) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('Login'),
+              backgroundColor: Colors.blue,
               automaticallyImplyLeading: false,
             ),
             body: Padding(
@@ -40,8 +40,18 @@ class LoginPage extends StatelessWidget {
                     ),
                     TextField(
                       controller: passwordController,
-                      decoration: InputDecoration(labelText: 'Senha'),
-                      obscureText: true,
+                      decoration: InputDecoration(
+                        labelText: 'Senha',
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            viewModel.obscurePassword
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                          ),
+                          onPressed: viewModel.toggleObscurePassword,
+                        ),
+                      ),
+                      obscureText: viewModel.obscurePassword,
                     ),
                     SizedBox(height: 16),
                     Row(

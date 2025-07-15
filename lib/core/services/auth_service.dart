@@ -1,3 +1,4 @@
+import 'package:insurance_seguradora/data/local/user_local_storage_service.dart';
 import 'package:insurance_seguradora/data/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -15,11 +16,12 @@ class AuthService {
       if (user != null) {
         await user.reload();
 
+        final userSave = await UserLocalStorageService().getUserById(user.uid);
         final userModel = UserModel(
-          id: user.uid,
-          name: user.displayName,
-          email: user.email,
-          phone: user.phoneNumber,
+          id: userSave!.id,
+          name: userSave.name,
+          email: userSave.email,
+          phone: userSave.phone,
         );
         return userModel;
       }
@@ -50,6 +52,8 @@ class AuthService {
         email: email,
         phone: phone,
       );
+
+      await UserLocalStorageService().saveUser(userModel);
 
       return userModel;
     } on FirebaseAuthException catch (_) {

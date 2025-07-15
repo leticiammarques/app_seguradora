@@ -23,7 +23,7 @@ class RegisterPage extends StatelessWidget {
         builder: (context, viewModel, child) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Cadastro'),
+              backgroundColor: Colors.blue,
               automaticallyImplyLeading: false,
             ),
             body: Padding(
@@ -49,8 +49,18 @@ class RegisterPage extends StatelessWidget {
                   ),
                   TextField(
                     controller: passwordController,
-                    decoration: const InputDecoration(labelText: 'Senha'),
-                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Senha',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          viewModel.obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                        onPressed: viewModel.toggleObscurePassword,
+                      ),
+                    ),
+                    obscureText: viewModel.obscurePassword,
                   ),
                   const SizedBox(height: 20),
                   if (viewModel.isLoading)

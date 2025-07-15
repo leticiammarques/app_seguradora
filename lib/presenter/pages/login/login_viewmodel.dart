@@ -11,6 +11,9 @@ class LoginViewModel extends ChangeNotifier {
   bool isLoading = false;
   UserModel? user;
 
+  bool _obscurePassword = true;
+  bool get obscurePassword => _obscurePassword;
+
   Future<void> login({
     required String email,
     required String password,
@@ -32,5 +35,10 @@ class LoginViewModel extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  void toggleObscurePassword() {
+    _obscurePassword = !_obscurePassword;
+    notifyListeners();
   }
 }

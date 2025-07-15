@@ -1,3 +1,4 @@
+import 'package:insurance_seguradora/data/local/user_local_storage_service.dart';
 import 'package:insurance_seguradora/data/models/user_model.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,7 @@ class SessionViewModel extends ChangeNotifier {
 
   void clearUser() {
     _currentUser = null;
+    UserLocalStorageService().clearCurrentSession();
     notifyListeners();
   }
 
