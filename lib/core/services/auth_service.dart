@@ -11,17 +11,16 @@ class AuthService {
         email: email,
         password: password,
       );
+
       final user = result.user;
 
       if (user != null) {
-        await user.reload();
-
         final userSave = await UserLocalStorageService().getUserById(user.uid);
         final userModel = UserModel(
-          id: userSave!.id,
-          name: userSave.name,
-          email: userSave.email,
-          phone: userSave.phone,
+          id: userSave?.id,
+          name: userSave?.name ?? user.displayName,
+          email: userSave?.email,
+          phone: userSave?.phone,
         );
         return userModel;
       }

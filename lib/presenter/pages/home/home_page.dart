@@ -70,47 +70,104 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    GridView.count(
-                      crossAxisCount: 2,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      mainAxisSpacing: 12,
-                      crossAxisSpacing: 12,
-                      childAspectRatio: 1,
-                      children: [
-                        QuoteCard(
-                          title: 'Automóvel',
-                          icon: Icons.directions_car,
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => WebViewPage(
-                                  url: 'https://www.tokiomarine.com.br/',
-                                  title: 'Cotação de Automóvel',
+                    // GridView.count(
+                    //   crossAxisCount: 2,
+                    //   shrinkWrap: true,
+                    //   physics: const NeverScrollableScrollPhysics(),
+                    //   mainAxisSpacing: 12,
+                    //   crossAxisSpacing: 12,
+                    //   childAspectRatio: 1,
+                    //   children: [
+                    //     QuoteCard(
+                    //       title: 'Automóvel',
+                    //       icon: Icons.directions_car,
+                    //       onTap: () {
+                    //         Navigator.of(context).push(
+                    //           MaterialPageRoute(
+                    //             builder: (_) => WebViewPage(
+                    //               url: 'https://www.tokiomarine.com.br/',
+                    //               title: 'Cotação de Automóvel',
+                    //             ),
+                    //           ),
+                    //         );
+                    //       },
+                    //     ),
+                    //     QuoteCard(
+                    //       title: 'Residência',
+                    //       icon: Icons.home,
+                    //       onTap: () {},
+                    //     ),
+                    //     QuoteCard(
+                    //       title: 'Vida',
+                    //       icon: Icons.favorite,
+                    //       onTap: () {},
+                    //     ),
+                    //     QuoteCard(
+                    //       title: 'Acidentes Pessoais',
+                    //       icon: Icons.health_and_safety,
+                    //       onTap: () {},
+                    //     ),
+                    //   ],
+                    // ),
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        // Define o tamanho máximo que cada item pode ocupar
+                        double maxCrossAxisExtent = constraints.maxWidth < 600 ? 200 : 250;
+
+                        return GridView.builder(
+                          itemCount: 4,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: maxCrossAxisExtent,
+                            mainAxisSpacing: 12,
+                            crossAxisSpacing: 12,
+                            childAspectRatio: 1,
+                          ),
+                          itemBuilder: (context, index) {
+                            final items = [
+                              {
+                                'title': 'Automóvel',
+                                'icon': Icons.directions_car,
+                                'onTap': () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => WebViewPage(
+                                      url: 'https://www.tokiomarine.com.br/',
+                                      title: 'Cotação de Automóvel',
+                                    ),
+                                  ),
                                 ),
-                              ),
+                              },
+                              {
+                                'title': 'Residência',
+                                'icon': Icons.home,
+                                'onTap': () {},
+                              },
+                              {
+                                'title': 'Vida',
+                                'icon': Icons.favorite,
+                                'onTap': () {},
+                              },
+                              {
+                                'title': 'Acidentes Pessoais',
+                                'icon': Icons.health_and_safety,
+                                'onTap': () {},
+                              },
+                            ];
+
+                            final item = items[index];
+
+                            return QuoteCard(
+                              title: item['title'] as String,
+                              icon: item['icon'] as IconData,
+                              onTap: item['onTap'] as VoidCallback,
                             );
                           },
-                        ),
-                        QuoteCard(
-                          title: 'Residência',
-                          icon: Icons.home,
-                          onTap: () {},
-                        ),
-                        QuoteCard(
-                          title: 'Vida',
-                          icon: Icons.favorite,
-                          onTap: () {},
-                        ),
-                        QuoteCard(
-                          title: 'Acidentes Pessoais',
-                          icon: Icons.health_and_safety,
-                          onTap: () {},
-                        ),
-                      ],
+                        );
+                      },
                     ),
-                    const SizedBox(height: 32),
 
+                    const SizedBox(height: 32),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
