@@ -82,7 +82,7 @@ class RegisterPage extends StatelessWidget {
                           Provider.of<SessionViewModel>(
                             context,
                             listen: false,
-                          ).setUser(viewModel.user!);
+                          ).setUser(viewModel.user);
                           Navigator.pushReplacementNamed(
                             context,
                             AppRoutes.home,

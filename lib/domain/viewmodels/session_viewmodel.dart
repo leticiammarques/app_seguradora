@@ -7,7 +7,7 @@ class SessionViewModel extends ChangeNotifier {
 
   UserModel? get currentUser => _currentUser;
 
-  void setUser(UserModel user) {
+  void setUser(UserModel? user) {
     _currentUser = user;
     notifyListeners();
   }
