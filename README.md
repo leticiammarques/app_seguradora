@@ -11,6 +11,8 @@ Siga os passos abaixo para configurar corretamente o seu próprio projeto Fireba
 
 ---
 
+Baixe o app e faça os passos seguintes na raiz do projeto
+
 ## 🔥 Configuração do Firebase (Obrigatória)
 
 ### 1. Crie um projeto no Firebase
@@ -31,12 +33,7 @@ Se ainda não tiver instalado, execute no terminal:
 ```
 dart pub global activate flutterfire_cli
 ```
-
-Depois, adicione o binário no seu PATH:
-
-```
-export PATH="$PATH":"$HOME/.pub-cache/bin"
-```
+PS: as informações de passo a passo também estarão na configurações do Firebase
 
 ---
 
